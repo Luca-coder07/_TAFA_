@@ -16,5 +16,8 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 ## Fonctionnalités
 *Plus tard*
 
+## Crédits
+Luca RANDRIANIRINA alias @Lux
+
 *Ce jeu est créé avec Raylib5 en C*
 *Bon game!*
