@@ -20,6 +20,9 @@ extern Sound fxCoin;
 extern "C" {            // Prevents name mangling of functions
 #endif
 
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+
 //----------------------------------------------------------------------------------
 // Logo Screen Functions Declaration
 //----------------------------------------------------------------------------------

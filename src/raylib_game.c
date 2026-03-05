@@ -13,12 +13,6 @@ Font font = { 0 };
 Music music = { 0 };
 Sound fxCoin = { 0 };
 
-//----------------------------------------------------------------------------------
-// Global Variables Definition (local to this module)
-//----------------------------------------------------------------------------------
-static const int screenWidth = 800;
-static const int screenHeight = 450;
-
 // Required variables to manage screen transitions (fade-in, fade-out)
 static float transAlpha = 0.0f;
 static bool onTransition = false;
@@ -44,7 +38,7 @@ int main(void)
 {
     // Initialization
     //---------------------------------------------------------
-    InitWindow(screenWidth, screenHeight, "raylib game template");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "TAFA with GOD");
 
     InitAudioDevice();      // Initialize audio device
 
