@@ -27,7 +27,7 @@ void UpdateEndingScreen(void)
     if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
     {
         finishScreen = 1;
-        PlaySound(fxCoin);
+        if (IsAudioDeviceReady() && fxCoinLoaded) PlaySound(fxCoin);
     }
 }
 

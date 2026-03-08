@@ -1,5 +1,6 @@
 #include "screens.h"    // NOTE: Declares global (extern) variables and screens functions
 
+#include <stdio.h>
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
 #endif
@@ -12,6 +13,8 @@ GameScreen currentScreen = LOGO;
 Font font = { 0 };
 Music music = { 0 };
 Sound fxCoin = { 0 };
+bool gameShouldClose = false;
+bool fxCoinLoaded = false;
 
 // Required variables to manage screen transitions (fade-in, fade-out)
 static float transAlpha = 0.0f;
@@ -36,63 +39,93 @@ static void UpdateDrawFrame(float dt);          // Update and draw one frame
 //----------------------------------------------------------------------------------
 int main(void)
 {
-	SetTraceLogLevel(LOG_WARNING);
+	//SetTraceLogLevel(LOG_WARNING);
 	// Initialization
 	//---------------------------------------------------------
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "TAFA with GOD");
 
-	InitAudioDevice();      // Initialize audio device
+    InitAudioDevice();      // Initialize audio device
 
     // Load global data (assets that must be available in all screens, i.e. font)
     font = LoadFont("resources/mecha.png");
     //music = LoadMusicStream("resources/ambient.ogg"); // TODO: Load music
-    fxCoin = LoadSound("resources/coin.wav");
 
-    SetMusicVolume(music, 1.0f);
-    PlayMusicStream(music);
-
-    // Setup and init first screen
-    currentScreen = LOGO;
-    InitLogoScreen();
-
-#if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
-#else
-    SetTargetFPS(60);       // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
-
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    // Load sound only if audio device was initialized correctly
+    if (IsAudioDeviceReady())
     {
-	float dt = GetFrameTime();
-	UpdateDrawFrame(dt);
+        fxCoin = LoadSound("resources/coin.wav");
+        fxCoinLoaded = true;
     }
-#endif
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
+    // Start music only if audio device is ready and music was loaded
+    if (IsAudioDeviceReady())
+    {
+        if (music.ctxData != 0)
+        {
+            SetMusicVolume(music, 1.0f);
+            PlayMusicStream(music);
+        }
+    }
+
+	// Setup and init first screen
+	currentScreen = LOGO;
+	InitLogoScreen();
+
+	#if defined(PLATFORM_WEB)
+    		emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
+	#else
+    	SetTargetFPS(60);       // Set our game to run at 60 frames-per-second
+    	//--------------------------------------------------------------------------------------
+
+	// Main game loop
+	while (!WindowShouldClose() && !gameShouldClose)
+	{
+		float dt = GetFrameTime();
+		UpdateDrawFrame(dt);
+	}
+	#endif
+
+	// De-Initialization
+	//--------------------------------------------------------------------------------------
+    // De-Initialization trace
+    fprintf(stderr, "[EXIT] Starting de-initialization (currentScreen=%d)\n", currentScreen);
     // Unload current screen data before closing
     switch (currentScreen)
     {
-        case LOGO: UnloadLogoScreen(); break;
-        case TITLE: UnloadTitleScreen(); break;
-        case OPTIONS: UnloadOptionsScreen(); break;
-        case GAMEPLAY: UnloadGameplayScreen(); break;
-        case ENDING: UnloadEndingScreen(); break;
+        case LOGO: fprintf(stderr, "[EXIT] Unloading LOGO screen\n"); UnloadLogoScreen(); break;
+        case TITLE: fprintf(stderr, "[EXIT] Unloading TITLE screen\n"); UnloadTitleScreen(); break;
+        case OPTIONS: fprintf(stderr, "[EXIT] Unloading OPTIONS screen\n"); UnloadOptionsScreen(); break;
+        case GAMEPLAY: fprintf(stderr, "[EXIT] Unloading GAMEPLAY screen\n"); UnloadGameplayScreen(); break;
+        case ENDING: fprintf(stderr, "[EXIT] Unloading ENDING screen\n"); UnloadEndingScreen(); break;
         default: break;
     }
+    fprintf(stderr, "[EXIT] Screens unloaded\n");
+
 
     // Unload global data loaded
+    fprintf(stderr, "[EXIT] Unloading global assets\n");
     UnloadFont(font);
-    UnloadMusicStream(music);
-    UnloadSound(fxCoin);
+    if (music.ctxData != 0)
+    {
+        if (IsAudioDeviceReady()) { fprintf(stderr, "[EXIT] Unloading music stream\n"); UnloadMusicStream(music); }
+    }
+    // Audio shutdown can hang on some backends (PulseAudio/miniaudio) during CloseAudioDevice.
+    // To avoid a silent freeze on exit we skip explicit audio device close/unload here.
+    if (IsAudioDeviceReady() && fxCoinLoaded)
+    {
+        fprintf(stderr, "[EXIT] Skipping UnloadSound(fxCoin) to avoid potential hang\n");
+    }
+    if (IsAudioDeviceReady())
+    {
+        fprintf(stderr, "[EXIT] Skipping CloseAudioDevice() to avoid potential hang\n");
+    }
 
-    CloseAudioDevice();     // Close audio context
-
+    fprintf(stderr, "[EXIT] Closing window\n");
     CloseWindow();          // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    fprintf(stderr, "[EXIT] De-initialization complete\n");
+	//--------------------------------------------------------------------------------------
 
-    return 0;
+	return 0;
 }
 
 //----------------------------------------------------------------------------------
