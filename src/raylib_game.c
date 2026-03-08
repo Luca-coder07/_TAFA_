@@ -36,11 +36,12 @@ static void UpdateDrawFrame(float dt);          // Update and draw one frame
 //----------------------------------------------------------------------------------
 int main(void)
 {
-    // Initialization
-    //---------------------------------------------------------
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "TAFA with GOD");
+	SetTraceLogLevel(LOG_WARNING);
+	// Initialization
+	//---------------------------------------------------------
+	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "TAFA with GOD");
 
-    InitAudioDevice();      // Initialize audio device
+	InitAudioDevice();      // Initialize audio device
 
     // Load global data (assets that must be available in all screens, i.e. font)
     font = LoadFont("resources/mecha.png");
