@@ -45,13 +45,20 @@ void	UpdatePlayer(t_player *player, float dt)
 	}
 	if (IsKeyDown(KEY_LEFT))
 	{
-		// if (player->dir == 1) ImageFlipVertical(player->idle_image[player->current_frame]);
+		if (player->dir == 1) {
+			FlipTextureVertical(&(player->idle_image[player->current_frame]));
+			FlipTextureVertical(&(player->walk_image[player->current_frame]));
+		}
 		player->pos_x -= player->speed * dt;
 		player->state = WALK;
 		player->dir = -1;
 	}
 	else if (IsKeyDown(KEY_RIGHT))
 	{
+		if (player->dir == -1) {
+			FlipTextureVertical(&(player->idle_image[player->current_frame]));
+			FlipTextureVertical(&(player->walk_image[player->current_frame]));
+		}
 		player->pos_x += player->speed * dt;
 		player->state = WALK;
 		player->dir = 1;
