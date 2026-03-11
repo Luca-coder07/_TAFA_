@@ -14,7 +14,22 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 ---
 
 ## Fonctionnalités
-[:check_mark:] - Animations (WALK, IDLE, )
+✅ - Mouvements
+✅ - Animations (WALK, IDLE)
+❌ - Jump
+❌ - HUD
+❌ - Title screen
+❌ - Finish screen
+❌ - Game over screen
+❌ - Option/Pause screen
+❌ - AI follow
+❌ - Collision with env
+❌ - Save'n load system
+❌ - Particles effects if needed
+❌ - Camera shacking
+❌ - Upgrading system
+❌ - Level Design
+❌ - Musics and sounds effects
 
 ## Crédits
 Luca RANDRIANIRINA alias @Lux
