@@ -48,8 +48,8 @@ void UpdateTitleScreen(void)
 void DrawTitleScreen(void)
 {
 	// TODO: Draw TITLE screen here!
-	Vector2 pos = { SCREEN_WIDTH / 2 - MeasureTextEx(font, "TAFA WITH GOD", font.baseSize*5.0f, 4).x / 2, 50};
-	DrawTextEx(font, "TAFA WITH GOD", pos, font.baseSize*5.0f, 4, GRAY);
+	Vector2 pos = { SCREEN_WIDTH / 2 - MeasureTextEx(font, "TAFA", font.baseSize*5.0f, 4).x / 2, 50};
+	DrawTextEx(font, "TAFA", pos, font.baseSize*5.0f, 4, GRAY);
     
 	Vector2 pos_1 = { hover_state == PLAY ? 10 + font.baseSize : 10, SCREEN_HEIGHT / 2 - MeasureTextEx(font, "Hilalao", font.baseSize, 2).y };
 	Vector2 pos_2 = { hover_state == OPTION ? 10 + font.baseSize : 10, SCREEN_HEIGHT / 2 + MeasureTextEx(font, "PARAMETRES", font.baseSize, 2).y };
