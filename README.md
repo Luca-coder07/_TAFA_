@@ -16,8 +16,8 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 
 ## Fonctionnalités
 - ✅ Mouvements
-- ❌ Jump [TO DO: BUG FIX]
-- ✅ Animations (WALK, IDLE)
+- ✅ Jump
+- ✅ Animations (WALK, IDLE, JUMP)
 - ❌ HUD
 - ❌ Title screen
 - ❌ Finish screen
