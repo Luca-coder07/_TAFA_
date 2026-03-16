@@ -1,4 +1,5 @@
 #include "player.h"
+#include <stdio.h>
 
 static float gravity = 900.0f;
 static float ground_level = SCREEN_HEIGHT * 0.85f;
@@ -55,7 +56,7 @@ void	InitPlayer(t_player *player)
 void	UpdatePlayer(t_player *player, float dt)
 {
 	player->timer += dt;
-	player->frame_time = (player->state == JUMP) ? 0.5f : 0.1f;
+	player->frame_time = (player->state == JUMP) ? 0.2f : 0.1f;
     if (player->pos_y >= ground_level)
     {
 		// Le joueur est au sol
@@ -67,6 +68,7 @@ void	UpdatePlayer(t_player *player, float dt)
 	else
 		player->state = JUMP;
 
+	printf("frame time: %0.2f\n", player->frame_time);
 	if (player->timer >= player->frame_time)
 	{
 		if (player->state != JUMP)
