@@ -32,6 +32,11 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 - ❌ Level Design
 - ❌ Musics and sounds effects
 
+## LEVEL IMPLEMENTATION
+- ❌ SUBSTATE Implementation
+- ❌ LEVEL 1
+- ❌ LEVEL 2
+
 ## Crédits
 Luca RANDRIANIRINA alias @Lux
 

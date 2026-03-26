@@ -41,7 +41,7 @@ static void UpdateDrawFrame(float dt);          // Update and draw one frame
 //----------------------------------------------------------------------------------
 int main(void)
 {
-	//SetTraceLogLevel(LOG_WARNING);
+	SetTraceLogLevel(LOG_WARNING);
 	// Initialization
     SetConfigFlags(FLAG_WINDOW_HIDDEN);
     InitWindow(screen_width, screen_width, "TAFA");
