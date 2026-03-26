@@ -1,14 +1,14 @@
 #include "player.h"
 
 static float gravity = 900.0f;
-static float ground_level = SCREEN_HEIGHT * 0.85f;
+static float ground_level = 0;
 
 void	InitPlayer(t_player *player)
 {
 	gravity = 900.0f;
-	ground_level = SCREEN_HEIGHT * 0.85f;
+	ground_level = screen_height * 0.85f;
 
-	player->pos_x = SCREEN_WIDTH * 0.1;
+	player->pos_x = screen_width * 0.1;
 	player->pos_y = ground_level;
 	player->speed_x = 100.0f;
 	player->vy = 0.0f;

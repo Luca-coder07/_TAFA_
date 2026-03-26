@@ -35,7 +35,7 @@ void UpdateEndingScreen(void)
 void DrawEndingScreen(void)
 {
     // TODO: Draw ENDING screen here!
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), BLUE);
+    DrawRectangle(0, 0, screen_width, screen_height, BLUE);
 
     Vector2 pos = { 20, 10 };
     DrawTextEx(font, "ENDING SCREEN", pos, font.baseSize*3.0f, 4, DARKBLUE);

@@ -38,8 +38,8 @@ void UpdateGameplayScreen(float dt)
 void DrawGameplayScreen(void)
 {
     // TODO: Draw GAMEPLAY screen here!
-    DrawRectangle(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, SCREEN_HEIGHT, GRAY);
-    DrawLineEx((Vector2){0, SCREEN_HEIGHT - 50}, (Vector2){SCREEN_WIDTH, SCREEN_HEIGHT - 50}, 5, BLACK);
+    DrawRectangle(0, screen_height * 0.9, screen_width, screen_height, GRAY);
+    DrawLineEx((Vector2){0, screen_height * 0.9}, (Vector2){screen_width, screen_height * 0.9}, 4, BLACK);
     DrawPlayer(player);
 }
 

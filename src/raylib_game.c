@@ -9,6 +9,8 @@
 // Shared Variables Definition (global)
 // NOTE: Those variables are shared between modules through screens.h
 //----------------------------------------------------------------------------------
+int screen_width = 1024;
+int screen_height = 768;
 GameScreen currentScreen = LOGO;
 Font font = { 0 };
 Music music = { 0 };
@@ -41,9 +43,16 @@ int main(void)
 {
 	//SetTraceLogLevel(LOG_WARNING);
 	// Initialization
-	//---------------------------------------------------------
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "TAFA");
-
+    SetConfigFlags(FLAG_WINDOW_HIDDEN);
+    InitWindow(screen_width, screen_width, "TAFA");
+	int monitor = GetCurrentMonitor();
+    screen_width = GetMonitorWidth(monitor);
+    screen_height = GetMonitorHeight(monitor);
+    CloseWindow();
+    InitWindow(screen_width, screen_height, "TAFA");
+    ToggleFullscreen();
+    //---------------------------------------------------------
+    
     InitAudioDevice();      // Initialize audio device
 
     // Load global data (assets that must be available in all screens, i.e. font)
@@ -228,7 +237,7 @@ static void UpdateTransition(void)
 // Draw transition effect (full-screen rectangle)
 static void DrawTransition(void)
 {
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+    DrawRectangle(0, 0, screen_width, screen_height, Fade(BLACK, transAlpha));
 }
 
 // Update and draw game frame

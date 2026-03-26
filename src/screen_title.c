@@ -51,19 +51,19 @@ void DrawTitleScreen(void)
 
     const float titleFontSize = font.baseSize * 6.0f;
     Vector2 titleTextSize = MeasureTextEx(font, "TAFA", titleFontSize, 2);
-    Vector2 titlePos = { (SCREEN_WIDTH - titleTextSize.x) / 2, 60 };
+    Vector2 titlePos = { (screen_width - titleTextSize.x) / 2, 60 };
     DrawTextEx(font, "TAFA", titlePos, titleFontSize, 2, BLACK);
 
     const float menuFontSize = font.baseSize * 2.5f;
     const float menuSpacing = menuFontSize * 1.8f;
-    float menuStartY = SCREEN_HEIGHT / 2 - menuSpacing;
+    float menuStartY = screen_height / 2 - menuSpacing;
 
     const char *menuItems[] = {"Play", "Options", "Quit"};
     const int menuCount = 3;
 
     for (int i = 0; i < menuCount; i++) {
         Vector2 textSize = MeasureTextEx(font, menuItems[i], menuFontSize, 2);
-        Vector2 pos = { (SCREEN_WIDTH - textSize.x) / 2, menuStartY + i * menuSpacing };
+        Vector2 pos = { (screen_width - textSize.x) / 2, menuStartY + i * menuSpacing };
 
         Color color = (hover_state == i) ? BLACK : GRAY;
 

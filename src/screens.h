@@ -13,6 +13,8 @@ typedef enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE, OPTIONS, GAMEPLAY, ENDI
 //----------------------------------------------------------------------------------
 // Global Variables Declaration (shared by several modules)
 //----------------------------------------------------------------------------------
+extern int screen_width;
+extern int screen_height;
 extern GameScreen currentScreen;
 extern Font font;
 extern Music music;
@@ -23,9 +25,6 @@ extern bool fxCoinLoaded;
 #ifdef __cplusplus
 extern "C" {            // Prevents name mangling of functions
 #endif
-
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
 
 //----------------------------------------------------------------------------------
 // Logo Screen Functions Declaration
