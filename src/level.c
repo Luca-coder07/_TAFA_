@@ -44,9 +44,9 @@ void DrawLevel(t_level *level)
                 DrawText(prologue_text[i], screen_width / 2 - MeasureText(prologue_text[i], 40) / 2, screen_height / 3 + (i * 40), 40, BLACK);
             }
         }
-        // TO DO: Draw Black Box and check if player is in collision with this.
         Rectangle blackBox = {screen_width * 0.8, screen_height * 0.85, screen_width * 0.05, screen_width * 0.05};
         DrawRectangleRec(blackBox, (Color){10, 10, 10, 255});
+        // TO DO: Check collision between player and the box
         break;
     }
 }
