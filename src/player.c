@@ -18,31 +18,42 @@ void InitPlayer(t_player *player)
 	}
 
 	// IDLE Texture
-	player->idle_image[0] = LoadTextureFromFile("resources/IDLE/idle_01.png");
-	player->idle_image[1] = LoadTextureFromFile("resources/IDLE/idle_02.png");
-	player->idle_image[2] = LoadTextureFromFile("resources/IDLE/idle_03.png");
-	player->idle_image[3] = LoadTextureFromFile("resources/IDLE/idle_04.png");
-	player->idle_image[4] = LoadTextureFromFile("resources/IDLE/idle_05.png");
-	player->idle_image[5] = LoadTextureFromFile("resources/IDLE/idle_06.png");
-	player->idle_image[6] = LoadTextureFromFile("resources/IDLE/idle_07.png");
-	player->idle_image[7] = LoadTextureFromFile("resources/IDLE/idle_08.png");
+	const char *idle_paths[8] = {
+		"resources/IDLE/idle_01.png",
+		"resources/IDLE/idle_02.png",
+		"resources/IDLE/idle_03.png",
+		"resources/IDLE/idle_04.png",
+		"resources/IDLE/idle_05.png",
+		"resources/IDLE/idle_06.png",
+		"resources/IDLE/idle_07.png",
+		"resources/IDLE/idle_08.png"};
 
 	// WALK Texture
-	player->walk_image[0] = LoadTextureFromFile("resources/WALK/walk_01.png");
-	player->walk_image[1] = LoadTextureFromFile("resources/WALK/walk_02.png");
-	player->walk_image[2] = LoadTextureFromFile("resources/WALK/walk_03.png");
-	player->walk_image[3] = LoadTextureFromFile("resources/WALK/walk_04.png");
-	player->walk_image[4] = LoadTextureFromFile("resources/WALK/walk_05.png");
-	player->walk_image[5] = LoadTextureFromFile("resources/WALK/walk_06.png");
-	player->walk_image[6] = LoadTextureFromFile("resources/WALK/walk_07.png");
-	player->walk_image[7] = LoadTextureFromFile("resources/WALK/walk_08.png");
+	const char *walk_paths[8] = {
+		"resources/WALK/walk_01.png",
+		"resources/WALK/walk_02.png",
+		"resources/WALK/walk_03.png",
+		"resources/WALK/walk_04.png",
+		"resources/WALK/walk_05.png",
+		"resources/WALK/walk_06.png",
+		"resources/WALK/walk_07.png",
+		"resources/WALK/walk_08.png"};
 
 	// JUMP Texture
-	player->jump_image[0] = LoadTextureFromFile("resources/JUMP/jump_01.png");
-	player->jump_image[1] = LoadTextureFromFile("resources/JUMP/jump_02.png");
-	player->jump_image[2] = LoadTextureFromFile("resources/JUMP/jump_03.png");
-	player->jump_image[3] = LoadTextureFromFile("resources/JUMP/jump_04.png");
-	player->jump_image[4] = LoadTextureFromFile("resources/JUMP/jump_05.png");
+	const char *jump_paths[5] = {
+		"resources/JUMP/jump_01.png",
+		"resources/JUMP/jump_02.png",
+		"resources/JUMP/jump_03.png",
+		"resources/JUMP/jump_04.png",
+		"resources/JUMP/jump_05.png"};
+
+	for (int i = 0; i < 8; i++)
+	{
+		player->idle_image[i] = LoadTextureFromFile(idle_paths[i]);
+		player->walk_image[i] = LoadTextureFromFile(walk_paths[i]);
+		if (i < 5)
+			player->jump_image[i] = LoadTextureFromFile(jump_paths[i]);
+	}
 
 	gravity = 900.0f;
 	ground_level = screen_height * 0.85f;
@@ -113,7 +124,7 @@ void UpdatePlayer(t_player *player, float dt)
 	if (player->pos.x >= screen_width - 50)
 		player->pos.x = screen_width - 50;
 
-	if (IsKeyPressed(KEY_SPACE) && !player->is_jumping && player->jump_timer <= 0.0f )
+	if (IsKeyPressed(KEY_SPACE) && !player->is_jumping && player->jump_timer <= 0.0f)
 	{
 		player->current_frame = 0;
 		player->vy = -player->jump_force;

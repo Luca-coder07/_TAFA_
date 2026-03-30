@@ -37,6 +37,10 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 - ❌ LEVEL 1
 - ❌ LEVEL 2
 
+## AMELIORATIONS DE PERFORMANCE
+- Consider multithreading or asynchronous loading:
+	While not visible in short code snippets, consider loading resources asynchronously to avoid stalls.
+
 ## Crédits
 Luca RANDRIANIRINA alias @Lux
 

@@ -41,7 +41,8 @@ void DrawLevel(t_level *level)
         {
             for (int i = 0; i < 4; i++)
             {
-                DrawText(prologue_text[i], screen_width / 2 - MeasureText(prologue_text[i], 40) / 2, screen_height / 3 + (i * 40), 40, BLACK);
+                int textWidth = MeasureText(prologue_text[i], 40);
+                DrawText(prologue_text[i], screen_width / 2 - textWidth / 2, screen_height / 3 + (i * 40), 40, BLACK);
             }
         }
         Rectangle blackBox = {screen_width * 0.8, screen_height * 0.85, screen_width * 0.05, screen_width * 0.05};
