@@ -143,7 +143,6 @@ void DrawPlayer(t_player player)
 {
 	Vector2 origin;
 	Rectangle source_rec;
-	Rectangle dest_rec;
 
 	if (player.state == IDLE)
 	{
