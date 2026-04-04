@@ -1,8 +1,7 @@
 #include "player.h"
 
-#define ANIM_SPEED_IDLE 0.1f
-#define ANIM_SPEED_WALK 0.1f
-#define ANIM_SPEED_JUMP 0.2f
+const float anim_speeds[] = {[IDLE] = 0.1f, [WALK] = 0.1f, [JUMP] = 0.2f, [RUN] = 0.1f};
+const int frames_count[] = {[IDLE] = 8, [WALK] = 8, [JUMP] = 5, [RUN] = 8};
 
 static float gravity = 900.0f;
 static float ground_level = 0;
@@ -91,7 +90,7 @@ void InitPlayer(t_player *player)
 void UpdatePlayer(t_player *player, float dt)
 {
 	player->timer += dt;
-	player->frame_time = (player->state == JUMP) ? ANIM_SPEED_JUMP : ANIM_SPEED_WALK;
+	player->frame_time = anim_speeds[player->state];
 	if (player->pos.y >= ground_level)
 	{
 		// Le joueur est au sol
@@ -105,10 +104,7 @@ void UpdatePlayer(t_player *player, float dt)
 
 	if (player->timer >= player->frame_time)
 	{
-		if (player->state != JUMP)
-			player->current_frame = (player->current_frame + 1) % 8;
-		else
-			player->current_frame = (player->current_frame + 1) % 5;
+		player->current_frame = (player->current_frame + 1) % frames_count[player->state];
 		player->timer = 0.0f;
 	}
 
@@ -171,80 +167,29 @@ void UpdatePlayer(t_player *player, float dt)
 
 void DrawPlayer(t_player player)
 {
-	Vector2 origin;
-	Rectangle source_rec;
-
-	if (player.state == IDLE)
+	Texture2D *current_anim = NULL;
+	switch (player.state)
 	{
-		source_rec = (Rectangle){0, 0,
-								 (float)player.idle_image[player.current_frame].width,
-								 (float)player.idle_image[player.current_frame].height};
-
-		origin = (Vector2){
-			player.idle_image[player.current_frame].width / 4.0f,
-			player.idle_image[player.current_frame].height / 4.0f};
-
-		if (player.dir == -1)
-		{
-			source_rec.width = -source_rec.width;
-		}
-
-		DrawTexturePro(player.idle_image[player.current_frame], source_rec, player.pos, origin, 0.0f, WHITE);
+	case IDLE:
+		current_anim = player.idle_image;
+		break;
+	case WALK:
+		current_anim = player.walk_image;
+		break;
+	case JUMP:
+		current_anim = player.jump_image;
+		break;
+	case RUN:
+		current_anim = player.run_image;
+		break;
 	}
+	// origine et source_rec peuvent être precalculés dans InitPlayer et stockés dans player si nécessaire
+	Vector2 origin = (Vector2){current_anim[player.current_frame].width / 4.0f, current_anim[player.current_frame].height / 4.0f};
+	Rectangle source_rec = (Rectangle){0, 0, (float)current_anim[player.current_frame].width, (float)current_anim[player.current_frame].height};
+	if (player.dir == -1)
+		source_rec.width = -source_rec.width;
 
-	if (player.state == WALK)
-	{
-		source_rec = (Rectangle){0, 0,
-								 (float)player.walk_image[player.current_frame].width,
-								 (float)player.walk_image[player.current_frame].height};
-
-		origin = (Vector2){
-			player.walk_image[player.current_frame].width / 4.0f,
-			player.walk_image[player.current_frame].height / 4.0f};
-
-		if (player.dir == -1)
-		{
-			source_rec.width = -source_rec.width;
-		}
-
-		DrawTexturePro(player.walk_image[player.current_frame], source_rec, player.pos, origin, 0.0f, WHITE);
-	}
-
-	if (player.state == JUMP)
-	{
-		source_rec = (Rectangle){0, 0,
-								 (float)player.jump_image[player.current_frame].width,
-								 (float)player.jump_image[player.current_frame].height};
-
-		origin = (Vector2){
-			player.jump_image[player.current_frame].width / 4.0f,
-			player.jump_image[player.current_frame].height / 4.0f};
-
-		if (player.dir == -1)
-		{
-			source_rec.width = -source_rec.width;
-		}
-
-		DrawTexturePro(player.jump_image[player.current_frame], source_rec, player.pos, origin, 0.0f, WHITE);
-	}
-
-	if (player.state == RUN)
-	{
-		source_rec = (Rectangle){0, 0,
-								 (float)player.run_image[player.current_frame].width,
-								 (float)player.run_image[player.current_frame].height};
-
-		origin = (Vector2){
-			player.run_image[player.current_frame].width / 4.0f,
-			player.run_image[player.current_frame].height / 4.0f};
-
-		if (player.dir == -1)
-		{
-			source_rec.width = -source_rec.width;
-		}
-
-		DrawTexturePro(player.run_image[player.current_frame], source_rec, player.pos, origin, 0.0f, WHITE);
-	}
+	DrawTexturePro(current_anim[player.current_frame], source_rec, player.pos, origin, 0.0f, WHITE);
 }
 
 void UnloadPlayer(t_player *player)

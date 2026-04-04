@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <stddef.h>
 #include "types.h"
 #include "raylib_utils.h"
 
