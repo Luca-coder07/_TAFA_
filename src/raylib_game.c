@@ -13,6 +13,8 @@ int screen_width = 1024;
 int screen_height = 768;
 GameScreen currentScreen = LOGO;
 SubGameScreen currentSubScreen = LEVEL_1;
+int mouseX = 0;
+int mouseY = 0;
 Font font = {0};
 Music music = {0};
 Sound fxCoin = {0};
@@ -92,6 +94,9 @@ int main(void)
     while (!WindowShouldClose() && !gameShouldClose)
     {
         float dt = GetFrameTime();
+        // Get Mouse Position
+        mouseX = GetMouseX();
+        mouseY = GetMouseY();
         UpdateDrawFrame(dt);
     }
 #endif

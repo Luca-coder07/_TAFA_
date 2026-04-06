@@ -56,8 +56,6 @@ void UpdateLevel(t_level *level, float dt, t_player *player)
 
 void DrawLevel(t_level *level)
 {
-    int mouseX = GetMouseX();
-    int mouseY = GetMouseY();
     DrawRectangle(0, screen_height * 0.9, screen_width, screen_height, GRAY);
     DrawLineEx((Vector2){0, screen_height * 0.9}, (Vector2){screen_width, screen_height * 0.9}, 4, BLACK);
     switch (level->type)
@@ -106,7 +104,7 @@ void DrawLevel(t_level *level)
                     buttonWidth,
                     buttonHeight};
 
-                bool hovered = CheckCollisionPointRec((Vector2){mouseX, mouseX}, btn);
+                bool hovered = CheckCollisionPointRec((Vector2){mouseX, mouseY}, btn);
 
                 DrawRectangleRec(btn, hovered ? SKYBLUE : DARKGRAY);
                 DrawRectangleLinesEx(btn, 2, RAYWHITE);
@@ -119,6 +117,12 @@ void DrawLevel(t_level *level)
                          RAYWHITE);
             }
         }
+        break;
+    case LEVEL_2:
+        DrawText("LEVEL 2", 0, 0, 10, BLACK);
+        break;
+    case LEVEL_3:
+        DrawText("LEVEL 3", 0, 0, 10, BLACK);
         break;
     }
 }
