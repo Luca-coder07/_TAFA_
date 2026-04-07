@@ -1,7 +1,5 @@
 #include "level.h"
 
-float timer = 0.0f;
-
 void LoadLevel(t_level *level, SubGameScreen levelType)
 {
     level->type = levelType;
@@ -9,13 +7,27 @@ void LoadLevel(t_level *level, SubGameScreen levelType)
 
     if (level->type == LEVEL_1)
     {
-        level->one.prologue_text[1] = "Ao anaty tontolo feno aizina,";                            //"Dans un monde plongé dans les ténèbres,",
-        level->one.prologue_text[2] = "izay hanjakan'ny tahotra sy fahadisoam-panantenana,";      //"où la peur et le désespoir règnent en maîtres,",
-        level->one.prologue_text[3] = "izay ny tsirairay dia gejain'ny safidiny sy ny filàny..."; //"où chacun est prisonnier de ses choix et désirs...",
-        level->one.prologue_text[4] = "raha tsy...";
+        level->one.prologue_text[0] = "Ao anaty tontolo feno aizina,";                            //"Dans un monde plongé dans les ténèbres,",
+        level->one.prologue_text[1] = "izay hanjakan'ny tahotra sy fahadisoam-panantenana,";      //"où la peur et le désespoir règnent en maîtres,",
+        level->one.prologue_text[2] = "izay ny tsirairay dia gejain'ny safidiny sy ny filàny..."; //"où chacun est prisonnier de ses choix et désirs...",
+        level->one.prologue_text[3] = "raha tsy...";
+
+        level->one.quiz_text[0] = "Quiz 1:";
+        level->one.quiz_text[1] = "Lehilahy iray mijery sary.";
+        level->one.quiz_text[2] = "Nisy olona nanontany azy: \"Iza io?\"";
+        level->one.quiz_text[3] = "Namaly izy: \"Tsy manana anabavy sy rahalahy aho,";
+        level->one.quiz_text[4] = "fa ny dadan'io olona io dia zanaky ny dadako.\"";
+        level->one.quiz_text[5] = "Iza ilay amin'ny sary?";
+
+        level->one.quiz_answer[0] = "Izy tenany ihany.";
+        level->one.quiz_answer[1] = "Zanany ihany.";
+        level->one.quiz_answer[3] = "Rafilahiny.";
+        level->one.quiz_answer[4] = "Dadatoany.";
+
         level->one.black_box = (Rectangle){screen_width * 0.8, screen_height * 0.85, screen_width * 0.05, screen_width * 0.05};
         level->one.show_quiz = false;
         level->one.hide_text = false;
+        level->one.timer = 0.0f;
     }
 }
 
@@ -24,9 +36,9 @@ void UpdateLevel(t_level *level, float dt, t_player *player)
     UpdatePlayer(player, dt);
     if (level->type == LEVEL_1)
     {
-        if (timer <= 5.0f)
+        if (level->one.timer <= 5.0f)
         {
-            timer += dt * 1.0f;
+            level->one.timer += dt * 1.0f;
             level->one.hide_text = false;
             player->can_move = false;
         }
@@ -73,17 +85,33 @@ void DrawLevel(t_level level, t_player player)
             DrawRectangleRec(quizRect, Fade((Color){30, 30, 30, 230}, 0.9f)); // semi-transparent dark rectangle
 
             // Draw the quiz inside the rectangle
-            const char *quizText[] = {
-                "Quiz:",
-                "Lehilahy iray mijery sary.",
-                "Nisy olona nanontany azy: \"Iza io?\"",
-                "Namaly izy: \"Tsy manana anabavy sy rahalahy aho,",
-                "fa ny dadan'io olona io dia zanaky ny dadako.\"",
-                "Iza ilay amin'ny sary?"};
             for (int i = 0; i < 6; i++)
-            {
-                DrawText(quizText[i], quizRect.x + 10, quizRect.y + 10 + i * 40, 20, RAYWHITE);
-            }
+                DrawText(level.one.quiz_text[i], quizRect.x + 10, quizRect.y + 10 + i * 40, 20, RAYWHITE);
+
+            // Positions pour les réponses
+            int padding = 10;
+            int lineHeight = 30;
+
+            // 1er texte : à gauche, milieu haut (au quart hauteur)
+            int x1 = quizRect.x - MeasureText(level.one.quiz_answer[0], 20) - padding;
+            int y1 = quizRect.y + quizRect.height / 4 - lineHeight / 2;
+            DrawText(level.one.quiz_answer[0], x1, y1, 20, BLACK);
+
+            // 2e texte : en bas à gauche
+            int x2 = quizRect.x + padding;
+            int y2 = quizRect.y + quizRect.height + lineHeight - padding;
+            DrawText(level.one.quiz_answer[1], x2, y2, 20, BLACK);
+
+            // 3e texte : en bas à droite
+            int textWidth3 = MeasureText(level.one.quiz_answer[2], 20);
+            int x3 = quizRect.x + quizRect.width - textWidth3 - padding;
+            int y3 = y2; // même hauteur que 2e texte
+            DrawText(level.one.quiz_answer[2], x3, y3, 20, BLACK);
+
+            // 4e texte : à droite, milieu haut (quart hauteur)
+            int x4 = quizRect.x + quizRect.width + padding;
+            int y4 = y1;
+            DrawText(level.one.quiz_answer[3], x4, y4, 20, BLACK);
 
             // Definire la taille du bouton
             int buttonWidth = (quizWidth - 50) / 4;

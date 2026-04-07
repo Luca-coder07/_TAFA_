@@ -6,9 +6,12 @@
 typedef struct s_one
 {
 	char *prologue_text[4];
+	char *quiz_text[6];
+	char *quiz_answer[4];
 	Rectangle black_box;
 	bool show_quiz;
 	bool hide_text;
+	float timer;
 } t_one;
 
 typedef struct s_title
