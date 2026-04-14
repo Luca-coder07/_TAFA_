@@ -6,6 +6,7 @@
 #include "struct.h"
 #include <stddef.h>
 #include "player.h"
+#include <math.h>
 #include "raylib_utils.h"
 
 #ifdef __cplusplus
