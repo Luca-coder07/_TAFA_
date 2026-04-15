@@ -17,7 +17,7 @@ void InitGameplayScreen(void)
 void UpdateGameplayScreen(float dt)
 {
 	UpdateLevel(&level, dt, &player);
-	if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+	if (IsKeyPressed(KEY_ENTER))
 	{
 		finishScreen = 1;
 		if (IsAudioDeviceReady() && fxCoinLoaded) PlaySound(fxCoin);
